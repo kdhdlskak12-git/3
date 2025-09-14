@@ -70,7 +70,7 @@
       <div class="stat" aria-live="polite">지금까지 참가자: <span id="participantCount">0</span> 명</div>
       <div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap">
         <div>
-          <div class="small muted">테스트를 시작하면 진행률이 표시됩니다.</div>
+          <div class="small muted"> 나는 기계식주차장 안전 관리에 대해 얼마나 알고 있을까? 모르면 모를수록 커지는 과태.</div>
         </div>
         <button id="btnStart" class="btn" aria-label="테스트 시작하기">테스트 시작하기</button>
       </div>
@@ -258,7 +258,7 @@
 
     // ====== 공유 ======
     btnShare.addEventListener('click', async ()=>{
-      const url = location.href; const text = '안전관리자 직무 셀프 테스트 결과';
+      const url = location.href; const text = '기계식주차장 과태료 진단 셀프 테스트 결과';
       try{
         if(navigator.share){ await navigator.share({ title: document.title, text, url }); }
         else { await navigator.clipboard.writeText(url); alert('URL이 복사되었습니다. 원하는 곳에 붙여넣기 하세요.'); }
