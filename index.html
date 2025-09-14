@@ -1,65 +1,73 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>기계식주차장 과태료 진단 셀프 테스트</title>
-  <style>
-    :root{
-      --bg:#29c3cd; /* 메인 민트 */
-      --bg-dark:#1fb4be;
-      --ink:#000000; /* 진한 글자 */
-      --card:#a7f3d0; /* 카드 배경 초록*/
-      --btn:#0e7c86; /* 버튼 */
-      --btn-hover:#0c6a72;
-      --ok:#17a34a; /* 정답 표시 */
-      --no:#ef4444; /* 오답 표시 */
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family: "Pretendard", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
-      background:var(--bg); color:var(--ink); display:flex; align-items:center; justify-content:center;
-    }
-    .app{width:min(960px, 100%); padding:24px}
-    .hero{background:linear-gradient(180deg, var(--bg) 0%, var(--bg-dark) 100%); border-radius:24px; padding:28px; color:white; position:relative; box-shadow:0 10px 20px rgba(0,0,0,.08)}
-    .hero h1{margin:0 0 8px; font-size:40px; letter-spacing:-.5px}
-    .hero p{margin:6px 0 0; opacity:.95}
-    .stat{
-      display:flex; align-items:center; gap:12px; margin-top:14px; font-weight:700; font-size:18px;
-      background:rgba(255,255,255,.15); width:max-content; padding:8px 14px; border-radius:999px;
-    }
-    .card{background:var(--card); border-radius:20px; padding:20px; margin-top:18px; box-shadow:0 10px 16px rgba(0,0,0,.06)}
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>기계식주차장 과태료 진단 셀프 테스트</title>
+<style>
+:root{
+--bg:#29c3cd; /* 메인 민트 */
+--bg-dark:#1fb4be;
+--ink:#000000; /* 글자색 검정 */
+--card:#a7f3d0; /* 카드 배경 초록 */
+--btn:#0e7c86; /* 버튼 */
+--btn-hover:#0c6a72;
+--ok:#17a34a; /* 정답 표시 */
+--no:#ef4444; /* 오답 표시 */
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+margin:0; font-family: "Pretendard", system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "맑은 고딕", sans-serif;
+background:var(--bg); color:var(--ink); display:flex; align-items:center; justify-content:center;
+}
+.app{width:min(960px, 100%); padding:24px}
+.hero{background:linear-gradient(180deg, var(--bg) 0%, var(--bg-dark) 100%); border-radius:24px; padding:28px; color:var(--ink); position:relative; box-shadow:0 10px 20px rgba(0,0,0,.08)}
+.hero h1{margin:0 0 8px; font-size:40px; letter-spacing:-.5px; color:var(--ink)}
+.hero p{margin:6px 0 0; opacity:.95; color:var(--ink)}
+.stat{
+display:flex; align-items:center; gap:12px; margin-top:14px; font-weight:700; font-size:18px;
+background:rgba(255,255,255,.15); width:max-content; padding:8px 14px; border-radius:999px;
+}
+.card{background:var(--card); border-radius:20px; padding:20px; margin-top:18px; box-shadow:0 10px 16px rgba(0,0,0,.06)}
 
-    .btn{appearance:none; border:none; background:var(--btn); color:#fff; font-weight:800; padding:16px 22px; border-radius:18px; cursor:pointer; font-size:18px; letter-spacing:-.2px; box-shadow:0 8px 14px rgba(0,0,0,.15)}
-    .btn:hover{background:var(--btn-hover)}
-    .btn.secondary{background:transparent; border:2px solid rgba(255,255,255,.8)}
 
-    .progress{height:14px; background:#b6eef2; border-radius:999px; overflow:hidden; margin:10px 0 18px}
-    .bar{height:100%; background:#0891b2; width:0%}
+.btn{appearance:none; border:none; background:var(--btn); color:#fff; font-weight:800; padding:16px 22px; border-radius:18px; cursor:pointer; font-size:18px; letter-spacing:-.2px; box-shadow:0 8px 14px rgba(0,0,0,.15)}
+.btn:hover{background:var(--btn-hover)}
+.btn.secondary{background:transparent; border:2px solid rgba(0,0,0,.8); color:var(--ink)}
 
-    .q-title{font-size:24px; margin:0 0 14px; line-height:1.4}
-    .opt{display:block; width:100%; text-align:left; padding:14px 16px; margin:10px 0; border-radius:16px; border:2px solid transparent; background:#b6eef2; color:#084d57; font-weight:800; cursor:pointer; font-size:18px}
-    .opt:hover{filter:brightness(.98)}
 
-    .pill{display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; font-weight:700}
-    .ok{background:#dcfce7; color:#14532d}
-    .no{background:#fee2e2; color:#7f1d1d}
+.progress{height:14px; background:#b6eef2; border-radius:999px; overflow:hidden; margin:10px 0 18px}
+.bar{height:100%; background:#0891b2; width:0%}
 
-    .result h2{margin:0 0 10px}
-    .grid{display:grid; grid-template-columns:1fr; gap:10px}
-    @media(min-width:720px){ .grid{grid-template-columns:1fr 1fr} }
 
-    .row{display:flex; align-items:center; justify-content:space-between; gap:12px; background:#b6eef2; border-radius:14px; padding:10px 12px}
-    .row span{font-weight:700}
+.q-title{font-size:24px; margin:0 0 14px; line-height:1.4; color:var(--ink)}
+.opt{display:block; width:100%; text-align:left; padding:14px 16px; margin:10px 0; border-radius:16px; border:2px solid transparent; background:#b6eef2; color:var(--ink); font-weight:800; cursor:pointer; font-size:18px}
+.opt:hover{filter:brightness(.98)}
 
-    .footer{margin-top:16px; display:flex; gap:12px; flex-wrap:wrap}
-    .muted{opacity:.8}
-    .center{text-align:center}
-    .small{font-size:16px}
 
-    .hide{display:none}
-  </style>
+.pill{display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; font-weight:700}
+.ok{background:#dcfce7; color:#14532d}
+.no{background:#fee2e2; color:#7f1d1d}
+
+
+.result h2{margin:0 0 10px; color:var(--ink)}
+.grid{display:grid; grid-template-columns:1fr; gap:10px}
+@media(min-width:720px){ .grid{grid-template-columns:1fr 1fr} }
+
+
+.row{display:flex; align-items:center; justify-content:space-between; gap:12px; background:#b6eef2; border-radius:14px; padding:10px 12px}
+.row span{font-weight:700; color:var(--ink)}
+
+
+.footer{margin-top:16px; display:flex; gap:12px; flex-wrap:wrap}
+.muted{opacity:.8; color:var(--ink)}
+.center{text-align:center}
+.small{font-size:16px; color:var(--ink)}
+
+
+.hide{display:none}
+</style>
 </head>
 <body>
   <div class="app">
